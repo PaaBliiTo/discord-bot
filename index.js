@@ -6,6 +6,8 @@ const methods = require('./methods.js');
 
 bot.on('ready', () => {
   console.log('Feels bad, man');
+  var bcChannel = bot.channels.find('id', '373108831300878336')
+  setInterval(blockchain, 10000, bcChannel)
 });
 
 bot.on('message', message => {
@@ -36,5 +38,10 @@ bot.on('message', message => {
          }
      }
 });
+
+function blockchain(channel){
+  channel.fetchMessages().then(messages => channel.bulkDelete(messages));
+  methods.cryptoPrice(channel)
+}
 
 bot.login(cred.token);
